@@ -3,7 +3,7 @@ import sys
 import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from GodsHand.agents.interceptor import DeliveryGateInterceptor
+from GodsHand.src.interceptor import DeliveryGateInterceptor
 
 interceptor = DeliveryGateInterceptor()
 
@@ -20,5 +20,3 @@ print("=== RAW OUTPUT FROM QWEN ===")
 print(repr(raw))
 print("============================")
 print("interceptor.has_pass_fail_gate(raw):", interceptor.has_pass_fail_gate(raw))
-if hasattr(interceptor, "validate"):
-    print("interceptor.validate(raw):", interceptor.validate(raw))

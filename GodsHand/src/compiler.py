@@ -1,18 +1,20 @@
 import os
-from GodsHand.utils.parser import load_rules
+
+
+CORE_DIRECTIVES = """## CORE DIRECTIVES
+1. Output ONLY raw, compile-ready code wrapped in a markdown block.
+2. Absolutely NO conversational filler, greetings, or explanations before or after the code.
+3. Prioritize memory safety and strict algorithmic complexity constraints."""
 
 class SystemPromptCompiler:
     def __init__(self):
-        self.rules = load_rules("ANTISLOP.md")
-        self.liveliness_toolkit = "" # Left empty as requested
+        self.liveliness_toolkit = ""
 
     def compile_prompt(self):
         prompt_parts = []
         
-        # Inject the parsed 38 rules
-        if self.rules:
-            prompt_parts.append("## ANTI-SLOP Rules\n")
-            prompt_parts.extend(self.rules)
+        # Give the Worker a concise, high-priority instruction set.
+        prompt_parts.append(CORE_DIRECTIVES)
         
         # Inject the Liveliness Toolkit
         if self.liveliness_toolkit:

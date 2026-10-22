@@ -11,7 +11,7 @@ class WorkerSandbox:
         self.branch_name = f"{self.agent_id}/{self.task_id}"
         self.base_image = base_image
         self.worktree_dir = Path(f"/tmp/godshand_worktrees/{self.task_id}")
-        
+        self.container_name = f"godshand-{self.agent_id}-{self.task_id}".replace("/", "-")
         
         # Determine repo root (where this file's parent's parent is)
         self.repo_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -46,8 +46,6 @@ class WorkerSandbox:
         Spawns a --rm daemonless container, mounts the worktree, and runs a mock worker script.
         Pipes error feedback via stdin if provided.
         """
-        # In a real scenario, this script would invoke the actual LLM agent inside the container.
-        # We will create a dummy script inside the worktree to simulate the worker agent.
         worker_script_path = self.worktree_dir / "worker_script.py"
         worker_script = f'''import sys
 import json
@@ -78,9 +76,11 @@ except Exception as e:
         with open(worker_script_path, "w") as f:
             f.write(worker_script)
 
-        # Subprocess fallback for robust stdin piping to ephemeral containers
+        print(f"[{self.agent_id}] Spawning Podman Container: {self.container_name} (image: {self.base_image})...")
         podman_cmd = [
-            "podman", "run", "--rm", "-i", "--network", "host", "--userns=keep-id",
+            "podman", "run", "--replace", "--rm", "-i",
+            "--name", self.container_name,
+            "--network", "host", "--userns=keep-id",
             "-v", f"{str(self.worktree_dir)}:/workspace:Z",
             self.base_image,
             "python", "/workspace/worker_script.py"

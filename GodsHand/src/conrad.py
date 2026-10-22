@@ -2,11 +2,11 @@ import sys
 from prompt_toolkit import PromptSession
 from prompt_toolkit.styles import Style
 
-from GodsHand.agents.compiler import SystemPromptCompiler
-from GodsHand.agents.interceptor import DeliveryGateInterceptor
+from GodsHand.src.compiler import SystemPromptCompiler
+from GodsHand.src.interceptor import DeliveryGateInterceptor
 
 from GodsHand.utils.state import Blackboard
-from GodsHand.agents.sandbox import WorkerSandbox
+from GodsHand.src.sandbox import WorkerSandbox
 
 def run_conrad_repl():
     """

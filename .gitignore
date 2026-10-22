@@ -1,0 +1,16 @@
+# Runtime state & locks
+*.lock
+state.jsonl
+state_*.jsonl
+failed_outputs/
+
+# Python cache & envs
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# System & IDE
+.vscode/
+.idea/
+.DS_Store

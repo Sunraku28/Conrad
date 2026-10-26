@@ -14,3 +14,7 @@ venv/
 .vscode/
 .idea/
 .DS_Store
+
+# Local Go launcher build
+conrad
+conrad.exe
